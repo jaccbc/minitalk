@@ -6,7 +6,7 @@
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:10:46 by joandre-          #+#    #+#             */
-/*   Updated: 2024/05/15 03:20:51 by joandre-         ###   ########.fr       */
+/*   Updated: 2024/05/20 04:11:03 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,19 @@ static bool	argcheck(int ac, char **av)
 				return (true);
 		}
 	}
-	ft_putstr_fd("[ERROR] ./client <PID> <STRING>\n", 2);
+	ft_putstr_fd("./client <PID> <STRING>\n", 2);
 	return (false);
 }
 
-static void	send_msg(pid_t srv, const char *msg)
+void	feedback(int signum)
 {
-	int	bit;
+	if (signum == SIGUSR1)
+		ft_putstr_fd("SERVER CONFIRMED MESSAGE ARRIVAL!\n", 1);
+}
+
+static void	send_msg(pid_t dst, const char *msg)
+{
+	unsigned int		bit;
 
 	while (*msg)
 	{
@@ -41,9 +47,9 @@ static void	send_msg(pid_t srv, const char *msg)
 		while (bit--)
 		{
 			if ((*msg >> bit) & 1)
-				kill(srv, SIGUSR1);
+				kill(dst, SIGUSR1);
 			else
-				kill(srv, SIGUSR2);
+				kill(dst, SIGUSR2);
 			usleep(42);
 		}
 		++msg;
@@ -51,15 +57,24 @@ static void	send_msg(pid_t srv, const char *msg)
 	bit = 8;
 	while (bit--)
 	{
-		kill(srv, SIGUSR2);
 		usleep(42);
+		kill(dst, SIGUSR2);
 	}
+	pause();
 }
 
 int	main(int argc, char **argv)
 {
+	struct sigaction	act;
+
 	if (!argcheck(argc, argv))
 		return (1);
+	act.sa_handler = feedback;
+	act.sa_flags = 0;
+	if (sigemptyset(&act.sa_mask) == -1
+		|| sigaction(SIGUSR1, &act, NULL) == -1
+		|| sigaction(SIGUSR2, &act, NULL) == -1)
+		return (-1);
 	send_msg(ft_atoi(argv[1]), argv[2]);
 	return (0);
 }
