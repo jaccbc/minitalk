@@ -6,7 +6,7 @@
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 01:30:58 by joandre-          #+#    #+#             */
-/*   Updated: 2024/05/20 03:57:02 by joandre-         ###   ########.fr       */
+/*   Updated: 2024/05/24 01:43:52 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@ void	sigmsg(pid_t sig, siginfo_t *info, void *context)
 		++c;
 	if (++b == 8)
 	{
-		if (c == '\0')
-		{
-			ft_putstr_fd("\n\n", 1);
-			kill(info->si_pid, SIGUSR1);
-		}
+		if (c)
+			write(STDOUT_FILENO, &c, 1);
 		else
-			ft_putchar_fd(c, 1);
+		{
+			write(STDOUT_FILENO, "\n\n--------------------\n\n", 24);
+			kill(info->si_pid, SIGUSR2);
+		}
 		b = 0;
 		c = 0;
 	}
 	else
 		c <<= 1;
+	usleep(1);
+	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
@@ -42,8 +44,7 @@ int	main(void)
 
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = sigmsg;
-	if (sigemptyset(&act.sa_mask) == -1
-		|| sigaction(SIGUSR1, &act, NULL) == -1
+	if (sigaction(SIGUSR1, &act, NULL) == -1
 		|| sigaction(SIGUSR2, &act, NULL) == -1)
 		return (-1);
 	ft_printf("PID: %i\n\n", getpid());
