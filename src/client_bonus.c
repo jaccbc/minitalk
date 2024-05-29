@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:10:46 by joandre-          #+#    #+#             */
-/*   Updated: 2024/05/29 16:58:10 by joandre-         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:58:54 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static bool	argcheck(int ac, char **av)
 {
@@ -64,6 +64,7 @@ static void	send_msg(pid_t dst, const char *msg)
 		++msg;
 	}
 	send_byte(dst, *msg);
+	pause();
 }
 
 int	main(int argc, char **argv)

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 01:30:58 by joandre-          #+#    #+#             */
-/*   Updated: 2024/05/29 16:59:27 by joandre-         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:00:02 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	sigmsg(int sig, siginfo_t *info, void *context)
 {
@@ -25,7 +25,10 @@ void	sigmsg(int sig, siginfo_t *info, void *context)
 		if (c)
 			write(STDOUT_FILENO, &c, 1);
 		else
+		{
 			write(STDOUT_FILENO, "\n_______________________\n", 25);
+			kill(info->si_pid, SIGUSR2);
+		}
 		b = 0;
 		c = 0;
 	}
@@ -46,7 +49,7 @@ int	main(void)
 	if (sigaction(SIGUSR1, &act, NULL) == -1
 		|| sigaction(SIGUSR2, &act, NULL) == -1)
 		return (-1);
-	ft_printf("PID: %i\n_____________\n", getpid());
+	ft_printf("PID: %i\n\n", getpid());
 	while (1)
 		;
 	return (0);
