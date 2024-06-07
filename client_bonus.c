@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 20:10:46 by joandre-          #+#    #+#             */
-/*   Updated: 2024/05/29 16:58:10 by joandre-         ###   ########.fr       */
+/*   Updated: 2024/06/01 00:42:14 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 static bool	argcheck(int ac, char **av)
 {
@@ -27,7 +27,7 @@ static bool	argcheck(int ac, char **av)
 				return (true);
 		}
 	}
-	write(STDERR_FILENO, "./client <PID> <STRING>\n", 24);
+	ft_putstr_fd("./client <PID> <STRING>\n", STDERR_FILENO);
 	return (false);
 }
 
@@ -36,7 +36,7 @@ void	feedback(int sig)
 	static int	i = 0;
 
 	if (sig == SIGUSR1 && i)
-		write(STDOUT_FILENO, "\nMESSAGE SENT!\n", 15);
+		ft_putstr_fd("\nMESSAGE SENT!\n", STDOUT_FILENO);
 	else if (sig == SIGUSR2)
 		i = 1;
 }
@@ -64,6 +64,7 @@ static void	send_msg(pid_t dst, const char *msg)
 		++msg;
 	}
 	send_byte(dst, *msg);
+	pause();
 }
 
 int	main(int argc, char **argv)

@@ -6,7 +6,7 @@
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 01:30:58 by joandre-          #+#    #+#             */
-/*   Updated: 2024/05/29 16:59:27 by joandre-         ###   ########.fr       */
+/*   Updated: 2024/06/01 00:45:25 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ void	sigmsg(int sig, siginfo_t *info, void *context)
 	if (++b == 8)
 	{
 		if (c)
-			write(STDOUT_FILENO, &c, 1);
+			ft_putchar_fd(c, STDOUT_FILENO);
 		else
-			write(STDOUT_FILENO, "\n_______________________\n", 25);
+		{
+			ft_putstr_fd("\n_______________________\n", STDOUT_FILENO);
+			kill(info->si_pid, SIGUSR2);
+		}
 		b = 0;
 		c = 0;
 	}
@@ -46,7 +49,7 @@ int	main(void)
 	if (sigaction(SIGUSR1, &act, NULL) == -1
 		|| sigaction(SIGUSR2, &act, NULL) == -1)
 		return (-1);
-	ft_printf("PID: %i\n_____________\n", getpid());
+	ft_printf("PID: %i\n\n", getpid());
 	while (1)
 		;
 	return (0);

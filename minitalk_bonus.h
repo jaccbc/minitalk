@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putstr.c                                           :+:      :+:    :+:   */
+/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 22:30:40 by joandre-          #+#    #+#             */
-/*   Updated: 2023/11/25 19:45:18 by joandre-         ###   ########.fr       */
+/*   Created: 2024/04/17 01:21:23 by joandre-          #+#    #+#             */
+/*   Updated: 2024/06/04 19:51:41 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "ft_printf.h"
 
-size_t	putstr(const char *format)
-{
-	size_t	size;
+#ifndef MINITALK_BONUS_H
+# define MINITALK_BONUS_H
 
-	if (!format)
-	{
-		ft_putstr_fd("(null)", 1);
-		return (6);
-	}
-	size = ft_strlen(format);
-	ft_putstr_fd((char *)format, 1);
-	return (size);
-}
+# include "libft/ft_printf.h"
+# include <stdbool.h>
+# include <signal.h>
+
+#endif

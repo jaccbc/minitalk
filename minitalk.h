@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: joandre- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 15:29:51 by joandre-          #+#    #+#             */
-/*   Updated: 2023/10/04 15:29:53 by joandre-         ###   ########.fr       */
+/*   Created: 2024/04/17 01:21:23 by joandre-          #+#    #+#             */
+/*   Updated: 2024/06/04 19:51:24 by joandre-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-/*
-int	main(void)
-{
-	int	ch[] = {'7', ' ', '\\', '9', '1'};
+#ifndef MINITALK_H
+# define MINITALK_H
 
-	for (int i = 0; i < 5; i++)
-	{
-		printf("[%c]\t", ch[i]);
-		if (ft_isdigit(ch[i]))
-			printf("[TRUE]\n");
-		else
-			printf("[FALSE]\n");
-	}
-	return (0);
-}*/
+# include "libft/ft_printf.h"
+# include <stdbool.h>
+# include <signal.h>
+
+#endif
